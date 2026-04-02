@@ -16,3 +16,6 @@ notebooks/xyz.py
 notebooks/fix_loan_status.py
 notebooks/final_data_fix.py
 notebooks/fix_risk_labels.py
+
+msme_risk.db
+msme_risk.sqbpro
