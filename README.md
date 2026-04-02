@@ -13,7 +13,7 @@ proactively and reduce write-offs.
 
 ## Dashboard Preview
 ![Portfolio Health](outputs/page1.png)
-![Branch & Risk Intelligence](outputs/pag2.png)
+![Branch & Risk Intelligence](outputs/page2.png)
 
 
 
