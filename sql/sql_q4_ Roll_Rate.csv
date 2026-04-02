@@ -1,0 +1,15 @@
+SELECT
+    dpd_bucket,
+    COUNT(*) AS account_count,
+    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM msme_loans_clean), 2) AS pct_of_portfolio,
+    ROUND(SUM(loan_amount)/10000000.0, 2) AS exposure_crore,
+    ROUND(AVG(credit_score), 1) AS avg_credit_score
+FROM msme_loans_clean
+GROUP BY dpd_bucket
+ORDER BY CASE dpd_bucket
+    WHEN 'Current'   THEN 1
+    WHEN 'DPD 1-30'  THEN 2
+    WHEN 'DPD 31-60' THEN 3
+    WHEN 'DPD 61-90' THEN 4
+    ELSE 5
+END;

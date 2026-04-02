@@ -1,0 +1,25 @@
+-- Borrowers flagged for proactive intervention
+SELECT
+    borrower_id,
+    borrower_name,
+    sector,
+    branch_id,
+    ROUND(loan_amount/100000.0, 1) AS loan_lakh,
+    credit_score,
+    dpd_current,
+    bounce_count_6m,
+    gst_filing,
+    risk_category,
+    loan_status,
+    -- Composite risk score (higher = more urgent)
+    (dpd_current/10 + bounce_count_6m*5 +
+     CASE gst_filing WHEN 'Non-Filer' THEN 8
+                      WHEN 'Irregular' THEN 4 ELSE 0 END +
+     CASE WHEN credit_score < 650 THEN 10
+          WHEN credit_score < 700 THEN 5 ELSE 0 END
+    ) AS urgency_score
+FROM msme_loans_clean
+WHERE risk_category IN ('Red', 'Critical')
+  AND loan_status != 'NPA'  -- already NPA accounts handled separately
+ORDER BY urgency_score DESC
+LIMIT 50;

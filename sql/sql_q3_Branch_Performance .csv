@@ -1,0 +1,16 @@
+SELECT
+    branch_id,
+    COUNT(*) AS total_accounts,
+    ROUND(SUM(loan_amount)/1000000.0, 2) AS exposure_lakhs,
+    ROUND(100.0 * SUM("default") / COUNT(*), 2) AS default_rate_pct,
+    ROUND(AVG(dpd_current), 1) AS avg_dpd,
+    SUM(CASE WHEN risk_category IN ('Red','Critical') THEN 1 ELSE 0 END) AS high_risk_accounts,
+    CASE
+        WHEN 100.0 * SUM("default") / COUNT(*) > 25 THEN 'CRITICAL'
+        WHEN 100.0 * SUM("default") / COUNT(*) > 15 THEN 'WATCH'
+        ELSE 'HEALTHY'
+    END AS branch_health
+FROM msme_loans_clean
+GROUP BY branch_id
+ORDER BY default_rate_pct DESC
+LIMIT 20;

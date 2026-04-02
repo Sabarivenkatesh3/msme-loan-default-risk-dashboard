@@ -1,0 +1,18 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
+# Ignore temp scripts (optional)
+notebooks/a.py
+notebooks/b.py
+notebooks/c.py
+notebooks/xyz.py
+notebooks/fix_loan_status.py
+notebooks/final_data_fix.py
+notebooks/fix_risk_labels.py
